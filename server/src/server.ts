@@ -8,6 +8,14 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
+import eventRoutes from "./routes/events.js";
+import competitionRoutes from "./routes/competitions.js";
+import adminRoutes from "./routes/admin.js";
+import bettingRoutes from "./routes/betting.js";
+import { isMyAccount, verifyToken } from "./middleware/middleware.js";
+import { editUserAccount } from "./controllers/users/users.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +40,15 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+app.put("/:userId/edit", verifyToken, isMyAccount, upload.single("picture"), editUserAccount);
+
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/events", eventRoutes);
+app.use("/competitions", competitionRoutes);
+app.use("/admin", adminRoutes);
+app.use("/betting", bettingRoutes);
+
 
 const PORT = process.env.PORT || 6001;
 const MONGO_URL = process.env.MONGO_URL;
