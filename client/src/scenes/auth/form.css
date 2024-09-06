@@ -1,0 +1,35 @@
+.register {
+    display: grid;
+    column-gap: 30px;
+    row-gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 5% 0;
+}
+
+.register input {
+    width: 15rem;
+}
+
+button {
+    margin: 2% 0 3% 0 !important;
+    width: 40%;
+}
+
+p{
+    color: #0d6efd;
+    cursor: pointer;
+    margin-top: 2% !important;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    margin: 10% 0;
+    
+}
+
+.login input {
+    width: 25rem;
+}

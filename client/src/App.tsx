@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-// import AuthPage from './scenes/auth/AuthPage';
-// import HomePage from './scenes/homePage/HomePage';
+import AuthPage from './scenes/auth/AuthPage';
+import HomePage from './scenes/homePage/HomePage';
 import { useAppSelector } from './state/hooks';
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
     <div className='app'>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<AuthPage />} />
-          <Route path='/home' element={isAuth ? <HomePage /> : <Navigate to="/" />} /> */}
+          <Route path="/" element={<AuthPage />} />
+          <Route path='/home' element={isAuth ? <HomePage /> : <Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </div>

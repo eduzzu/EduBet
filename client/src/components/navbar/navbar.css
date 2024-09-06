@@ -1,0 +1,62 @@
+.navbar {
+    background-color: #0d6efd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.5rem;
+    width: 100%;
+}
+
+.edubet {
+   margin: 0 0 0 7%;
+   font-size: 2rem;
+   font-weight: bolder;
+   color: white;
+   font-family: "Varela Round", sans-serif;
+   cursor: pointer;
+}
+
+.navbarOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    
+}
+
+.navbarOptions h4 {
+    margin-bottom: 0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.userInfo {
+    display: flex;
+    gap: 10px;
+    margin-right: 7%;
+}
+
+.userInfo h6 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    color: white;
+    cursor: pointer;
+}
+
+
+.userData h6 {
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-right: 0;
+    object-fit: cover;
+    cursor: pointer;
+}
+

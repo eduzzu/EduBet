@@ -1,0 +1,62 @@
+.event {
+    display: flex;
+    width: max-content;
+    height: fit-content;
+    padding: 2% 3%;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.event p {
+    color: black;
+    margin: 0 !important;
+    width: 19em;
+}
+
+#evDate {
+    margin: 2% 0 1% 0 !important;
+}
+
+.eventInfo p {
+    font-size: 15px;
+}
+
+#awayTeam {
+    margin-top: 1% !important;
+    margin-bottom:0 !important;
+}
+
+.odds {
+    display: flex;
+    align-items: end;
+    width: fit-content;
+    height: fit-content;
+    gap: 20px;
+}
+
+.odds p {
+    display: flex;
+    width: max-content;
+    height: fit-content;
+    padding: 0.5em 1em;
+    margin: 0 !important;
+    gap: 35px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-size: 14px;
+    
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+#final {
+    font-size: 12px;
+    margin-bottom: 0;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 0;
+    background-color: white;
+}

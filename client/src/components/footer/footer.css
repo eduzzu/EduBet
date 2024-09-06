@@ -1,0 +1,15 @@
+.footer {
+    padding: 1rem;
+    background-color: #0d6efd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 65px;
+}
+
+.footer h5{
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0;
+    font-size: 16px;
+}
