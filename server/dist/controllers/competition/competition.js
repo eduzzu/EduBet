@@ -5,6 +5,9 @@ export const getCompetition = async (req, res) => {
         const competition = await Competition.findById(competitionId).populate({
             path: "events",
             select: "name events",
+        }).populate({
+            path: "country",
+            select: "name country"
         });
         if (!competition) {
             return res.status(404).json("Competition not found.");
@@ -18,7 +21,7 @@ export const getCompetition = async (req, res) => {
             .json("An error occured while searching competition...");
     }
 };
-export const getCompetitons = async (req, res) => {
+export const getCompetitions = async (req, res) => {
     try {
         const competitions = await Competition.find().populate({
             path: "events",

@@ -7,6 +7,9 @@ export const getCompetition = async (req: Request, res: Response) => {
     const competition = await Competition.findById(competitionId).populate({
       path: "events",
       select: "name events",
+    }).populate({
+      path: "country",
+      select: "name country"
     });
 
     if (!competition) {
@@ -22,7 +25,7 @@ export const getCompetition = async (req: Request, res: Response) => {
   }
 };
 
-export const getCompetitons = async (req: Request, res: Response) => {
+export const getCompetitions = async (req: Request, res: Response) => {
   try {
     const competitions = await Competition.find().populate({
       path: "events",
