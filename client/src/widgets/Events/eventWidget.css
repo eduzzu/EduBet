@@ -1,10 +1,11 @@
 .event {
     display: flex;
-    width: max-content;
+    width: 91%;
     height: fit-content;
     padding: 2% 3%;
     border-radius: 10px;
     background-color: white;
+    cursor: pointer;
 }
 
 .event p {

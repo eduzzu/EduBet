@@ -4,7 +4,8 @@ import Navbar from "../../components/navbar/Navbar";
 import "./homePage.css";
 import { useAppSelector } from "../../state/hooks";
 import { ICompetition } from "../../interfaces/Competition";
-import Events from "../../components/event/Events";
+import EventsWidget from "../../widgets/Events/EventsWidget";
+import BettingTicket from "../../components/bettingTicket/BettingTicket";
 
 const HomePage = () => {
     const [competitions, setCompetitions] = useState([]);
@@ -39,7 +40,7 @@ const HomePage = () => {
             <hr></hr>
             </aside>
 
-            <Events />
+            <EventsWidget />
             <aside className="checkAndSeeTicket">
 
             <div className="checkTicket">
@@ -47,6 +48,8 @@ const HomePage = () => {
                 <input type="text" className="form-control form-control-sm" placeholder="Ticket ID"></input>
                 <button type="button" className="btn btn-primary">&gt;</button>
             </div>
+            
+            <BettingTicket />
             </aside>
             
         </div>
