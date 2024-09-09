@@ -18,87 +18,84 @@ export const getBettingTickets = async (req: Request, res: Response) => {
 
 export const addEventToTicket = async (req: Request, res: Response) => {
   try {
-    const { ticketId, eventId, odd } = req.body;
-    const ticket = await BettingTicket.findById(ticketId);
+    const { eventId, odd, stake } = req.body;
+    const userId = req.user.id;
+    const ticket = await BettingTicket.findOne({ userId: userId, status: 'Unset' });
 
-    if (!ticket) {
-      return res.status(404).json("Betting ticket does not exist.");
+    if (ticket) {
+      const existingSelectionIndex = ticket.selections.findIndex(selection => 
+        selection.eventId.equals(eventId)
+      );
+
+      if (existingSelectionIndex !== -1) {
+        ticket.selections[existingSelectionIndex] = {
+          eventId: eventId,
+          odd: odd,
+          status: "Active"
+        };
+      } else {
+
+        ticket.selections.push({
+          eventId: eventId,
+          odd: odd,
+          status: "Active"
+        });
+      }
+      const totalOdd = ticket.selections.reduce((total: number, selection: any) => total * selection.odd, 1);
+      ticket.totalOdd = parseFloat(totalOdd.toFixed(2));
+      ticket.potentialWin = parseFloat((totalOdd * stake).toFixed(2));
+
+      await ticket.save();
+      return res.status(200).json(ticket);
+    } else {
+      const newBettingTicket = new BettingTicket({
+        userId,
+        selections: [{ eventId, odd, status: "Active" }],
+        totalOdd: odd, 
+        stake,
+        potentialWin: odd * stake,
+        status: "Unset",
+      });
+
+      const savedBettingTicket = await newBettingTicket.save();
+      return res.status(201).json(savedBettingTicket);
     }
-
-    ticket.selections.push({
-      eventId: eventId,
-      odds: odd,
-      status: "Active",
-    });
-
-    ticket.totalOdd *= odd;
-    ticket.potentialWin = ticket.totalOdd * ticket.stake;
-
-    await ticket.save();
-    return res.status(201).json(ticket);
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json("An error occured while adding event to the Betting Ticket...");
+    return res.status(500).json("An error occurred while adding event to the Betting Ticket...");
   }
 };
 
 export const removeEventFromTicket = async (req: Request, res: Response) => {
   try {
-    const { ticketId, eventId } = req.body;
-    const ticket = await BettingTicket.findById(ticketId);
+    const { eventId, stake } = req.body;
+    const userId = req.user.id;
+    const ticket = await BettingTicket.findOne({ userId: userId, status: 'Unset' });
 
     if (!ticket) {
       return res.status(404).json("Betting ticket not found");
     }
 
-    const eventIdx = ticket.selections.findIndex((selection) =>
+    const eventIdx = ticket.selections.findIndex((selection) => 
       selection.eventId.equals(eventId)
     );
+
     if (eventIdx === -1) {
       return res.status(404).json("Event not found in your betting ticket.");
     }
-    const eventOdd = ticket.selections[eventIdx].odds;
+
+    const eventOdd = ticket.selections[eventIdx].odd;
     ticket.selections.splice(eventIdx, 1);
-    ticket.totalOdd /= eventOdd;
-    ticket.potentialWin = ticket.totalOdd * ticket.stake;
+
+    const totalOdd = ticket.selections.reduce((total: number, selection: any) => total * selection.odd, 1);
+    ticket.totalOdd = totalOdd;
+    ticket.potentialWin = totalOdd * stake;
 
     await ticket.save();
     return res.status(200).json(ticket);
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json("An error occured while removing event from your ticket...");
-  }
-};
-
-export const createBettingTicket = async (req: Request, res: Response) => {
-  try {
-    const { userId, selections, stake } = req.body;
-    const totalOdd = selections.reduce((total: number, selection: any) => {
-      return total * selection.odds;
-    }, 1);
-
-    const potentialWin = totalOdd * stake;
-
-    const newBettingTicket = new BettingTicket({
-      userId,
-      selections,
-      totalOdd: totalOdd,
-      stake,
-      potentialWin,
-      status: "Active",
-    });
-
-    const savedBettingTicket = await newBettingTicket.save();
-    return res.status(201).json(savedBettingTicket);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json("An error occured while generating your betting ticket...");
+    return res.status(500).json("An error occurred while removing event from your ticket...");
   }
 };
 

@@ -10,7 +10,7 @@ export const getEvent = async(req: Request, res: Response) => {
             select: "name odds"
         }).populate({
             path: "competition",
-            select: "name competition"
+            select: "name country competition"
         });
 
         if(!event) {
@@ -32,7 +32,7 @@ export const getEvents = async(req: Request, res: Response) => {
             select: "name odds"
         }).populate({
             path: "competition",
-            select: "name competition"
+            select: "name country competition"
         });
 
         if(!events) {

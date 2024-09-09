@@ -8,7 +8,7 @@ export const getEvent = async (req, res) => {
             select: "name odds"
         }).populate({
             path: "competition",
-            select: "name competition"
+            select: "name country competition"
         });
         if (!event) {
             return res.status(404).json("Event not found.");
@@ -27,7 +27,7 @@ export const getEvents = async (req, res) => {
             select: "name odds"
         }).populate({
             path: "competition",
-            select: "name competition"
+            select: "name country competition"
         });
         if (!events) {
             return res.status(404).json("No event found.");
